@@ -45,7 +45,7 @@ export default function Profile() {
         onBack={navigateBack}
       />
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.headerProfile}>
           <Image style={styles.profileAvatar} source={DummyAvatar} />
           <View style={styles.profileInfo}>

@@ -9,7 +9,7 @@ export default StyleSheet.create({
   },
   headerProfile: {
     flexDirection: 'row',
-    marginBottom: 16,
+    marginVertical: 16,
   },
   profileInfo: {
     flex: 1,
@@ -29,6 +29,8 @@ export default StyleSheet.create({
     fontSize: 14,
     color: '#333'
   },
+
+  // compontizar
   profileStars: {
     marginTop: 8,
     flexDirection: 'row',
@@ -38,6 +40,7 @@ export default StyleSheet.create({
     height: 14,
     marginRight: 6,
   },
+
   profileDescription: {
     fontSize: 14,
     color: '#999',
@@ -60,7 +63,8 @@ export default StyleSheet.create({
   socialNetwork: {
     width: '100%',
     flexDirection: 'row',
-    marginVertical: 16,
+    marginTop: 16,
+    marginBottom: 40,
   },
   socialButton: {
     marginRight: 16,
