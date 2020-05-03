@@ -1,7 +1,8 @@
-import axios from 'axios';
+import { db } from '../firebase';
 
-const api = axios.create({
-  baseURL: 'http://192.168.1.38:3333', // link da api local
-});
-
-export default api;
+export const api = db.collection('business').add({
+  first: "Ada",
+  last: "Lovelace",
+  born: 1815
+}).then((result) => console.log('Sucesso', result.id))
+.catch((error) => console.error(error))
