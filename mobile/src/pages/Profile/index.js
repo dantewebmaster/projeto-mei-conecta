@@ -11,9 +11,8 @@ import Header from '../../components/Header';
 
 import DummyAvatar from '../../assets/paulo.png';
 import DummyImg from '../../assets/dummy-img.png';
-import StarIcon from '../../assets/star.png';
-import StarGrayIcon from '../../assets/star_gray.png';
 import ButtonEdit from '../../components/ButtonEdit';
+import Rating from '../../components/Rating';
 
 export default function Profile() {
   const navigation = useNavigation();
@@ -51,13 +50,11 @@ export default function Profile() {
           <View style={styles.profileInfo}>
             <Text style={styles.profileName}>Marcenaria Paulo</Text>
             <Text style={styles.profileCategory}>Marcenaria</Text>
-            <View style={styles.profileStars}>
-              <Image style={styles.star} source={StarIcon} />
-              <Image style={styles.star} source={StarIcon} />
-              <Image style={styles.star} source={StarIcon} />
-              <Image style={styles.star} source={StarIcon} />
-              <Image style={styles.star} source={StarGrayIcon} />
-            </View>
+            <Rating
+              disabled
+              count={3.5}
+              onReview={e => console.log(e)}
+            />
           </View>
           <ButtonEdit onPress={() => console.log('Editando...')} />
         </View>

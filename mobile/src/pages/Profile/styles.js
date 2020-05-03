@@ -27,7 +27,8 @@ export default StyleSheet.create({
   },
   profileCategory: {
     fontSize: 14,
-    color: '#333'
+    color: '#333',
+    marginBottom: 5,
   },
 
   // compontizar
