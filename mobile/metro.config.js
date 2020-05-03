@@ -9,7 +9,7 @@ module.exports = (async () => {
   },
     resolver: {
       assetExts: assetExts.filter(ext => ext !== "svg"),
-      sourceExts: [...sourceExts, "svg"]
+      sourceExts: ['expo.js', 'expo.ts', 'expo.tsx', ...sourceExts, 'ts', 'tsx', 'mjs', 'js', 'jsx', 'svg']
     }
   };
 })();

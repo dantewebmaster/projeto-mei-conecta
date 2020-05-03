@@ -57,7 +57,7 @@ export default function Partnerships() {
   return (
     <View style={styles.container}>
       <ScrollView
-        // stickyHeaderIndices={[1]} // component with index [1] is sticky
+        stickyHeaderIndices={[1]} // component with index [1] is sticky
         showsVerticalScrollIndicator={false}
         // bounces={false}
         // refreshing={false}

@@ -22,15 +22,19 @@ const AppDefaultTheme = {
   },
 };
 
-// const HomeStack = createStackNavigator();
-// function HomeStackScreen() {
-//   return (
-//     <HomeStack.Navigator>
-//       <HomeStack.Screen name="Home" component={Home} />
-//       <HomeStack.Screen name="Details" component={Details} />
-//     </HomeStack.Navigator>
-//   );
-// }
+const HomeStack = createStackNavigator();
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Details" component={Details} />
+    </HomeStack.Navigator>
+  );
+}
 
 const Tab = createBottomTabNavigator();
 
@@ -40,12 +44,10 @@ export default function Routes() {
   if (isLoggedIn) {
     return (
       <NavigationContainer theme={AppDefaultTheme}>
-        <Tab.Navigator
-          tabBar={props => <AppBottomNavbar {...props} />}
-        >
+        <Tab.Navigator tabBar={props => <AppBottomNavbar {...props} />}>
           <Tab.Screen
             name="Home"
-            component={Home}
+            component={HomeStackScreen}
             options={{
               tabBarLabel: 'Tela inicial'
             }}
