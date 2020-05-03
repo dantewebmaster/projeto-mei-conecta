@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
 
 export default StyleSheet.create({
   tabItem: {
-    marginBottom: 40,
+    marginBottom: 10,
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',

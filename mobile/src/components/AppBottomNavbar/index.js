@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import HomeIcon from '../../assets/home.svg';
 import InfluenceIcon from '../../assets/influenciador.svg';
 import ProfileIcon from '../../assets/profile.svg';
+import Searchcon from '../../assets/search.svg';
 
 // Styles
 import styles from './styles';
@@ -26,6 +27,8 @@ export default function AppBottomNavbar({ state, descriptors, navigation }) {
           tabIcon = <InfluenceIcon width={32} height={32} />
         } else if (route.name === 'Profile') {
           tabIcon = <ProfileIcon width={32} height={32} />
+        } else if (route.name === 'Search') {
+          tabIcon = <Searchcon width={32} height={32} />
         }
 
         const isFocused = state.index === index;

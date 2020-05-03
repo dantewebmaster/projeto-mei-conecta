@@ -1,24 +1,23 @@
 import React from 'react';
-// import { Feather } from '@expo/vector-icons';
 import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
-// import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 // import * as MailComposer from 'expo-mail-composer';
 // import formatMoney from '../../utils/formatMoney';
 
-// import Logo from '../../assets/logo.png';
 import styles from './styles';
+import Header from '../../components/Header';
 
 const Detail = () => {
 
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   // const route = useRoute();
 
   // // const incident = route.params.incident;
   // const message = 'Corpo da mensagem...';
 
-  // function navigateBack() {
-  //   navigation.goBack();
-  // }
+  function navigateBack() {
+    navigation.goBack();
+  }
 
   // function sendMail() {
   //   MailComposer.composeAsync({
@@ -34,6 +33,10 @@ const Detail = () => {
 
   return (
     <View style={styles.container}>
+      <Header
+        title="Minhas parcerias"
+        // onBack={navigateBack}
+      />
       <Text>Minhas Parcerias...</Text>
     </View>
   )
