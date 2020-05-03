@@ -19,5 +19,4 @@ if (!firebase.apps.length) {
 }
 
 export const db = firebase.firestore();
-
-// FIREBASE_TOKEN: '1//0hSLr_sR7G5KUCgYIARAAGBESNwF-L9Ir2XvPMS5ejnzVEFA8XsmIMTP1ThCfQDqU5Cc70sKCu04gEN3d17uvEGz4X3-rusax2gQ'
+export const storage = firebase.storage().ref();

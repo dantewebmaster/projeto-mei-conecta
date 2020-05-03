@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, Button, FlatList, TextInput, ScrollView, TouchableOpacity } from 'react-native';
-// import { Feather } from '@expo/vector-icons';
+import { View, Text, Image, Button, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getAllBusiness } from '../../services/businessApi';
+import { addImage } from '../../services/storageApi';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
 
 import LogoPF from '../../assets/logo-pf.png';
 import styles from './styles';
 import ProfileCard from '../../components/ProfileCard';
 
-import DummyImg from '../../assets/dummy-img.png';
-import DummyPetImg from '../../assets/pet.jpg';
-import DummyAvatar from '../../assets/paulo.png';
-
-export default function Partnerships() {
+export default function Home() {
   const [business, getBusiness] = useState([]);
-  // const [total, setTotal] = useState(0);
-  // const [page, setPage] = useState(1);
-  // const [loading, setLoading] = useState(false);
-
+  const [profileUrl, setProfileUrl] = useState('');
+  const [bannerUrl, setBannerUrl] = useState('');
   const navigation = useNavigation();
 
   function navigateToSearch() {
@@ -28,33 +24,8 @@ export default function Partnerships() {
     navigation.navigate('Details')
   }
 
-  // async function loadIncidents() {
-  //   if (loading) {
-  //     return;
-  //   }
-
-  //   if (total > 0 && incidents.length === total) {
-  //     return;
-  //   }
-
-  //   setLoading(true);
-
-  //   const response = await api.get('/incidents', {
-  //     params: { page }
-  //   });
-
-  //   setTotal(response.headers['x-total-count']);
-  //   setIncidents([...incidents, ...response.data]);
-  //   setPage(page + 1);
-  //   setLoading(false);
-  // }
-
-  // useEffect(() => {
-  //   loadIncidents();
-  // }, []);
-
   async function getBusinessList() {
-    await getAllBusiness()
+    await getAllBusiness({})
     .then((resp) => {
       getBusiness([ ...resp ])})
     .catch((error) => console.log(error));
@@ -64,13 +35,46 @@ export default function Partnerships() {
     getBusinessList();
   }, []);
 
+  pickImage = async (type) => {
+    const {
+      status: cameraRollPerm
+    } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+    if (cameraRollPerm === 'granted') {
+      let pickerResult = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        base64: true,
+        aspect: [4, 4],
+      });
+
+      if (!pickerResult.cancelled) {
+        type === 'profile' ? setProfileUrl(pickerResult.uri) : setBannerUrl(pickerResult.uri);
+      }
+      uploadImageAsync(pickerResult.uri, type);
+    }
+  };
+
+  async function uploadImageAsync (pictureUri, type) {
+      const data = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+          resolve(xhr.response);
+        };
+        xhr.onerror = function() {
+          reject(new Error('uriToBlob failed'));
+        };
+        xhr.responseType = 'blob';
+        xhr.open('GET', pictureUri, true);
+        xhr.send(null);
+      });
+
+    addImage('le2ne2gJoS55byK3YeZX', type, data);
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView
-        // stickyHeaderIndices={[1]} // component with index [1] is sticky
         showsVerticalScrollIndicator={false}
-        // bounces={false}
-        // refreshing={false}
       >
         <Image style={styles.logo} source={LogoPF} />
 
@@ -83,17 +87,34 @@ export default function Partnerships() {
           </View>
         </TouchableOpacity>
 
-        { 
-          business.map((businessItem) => 
+        <View>
+          <Text style={styles.fakeSearchFieldText}>Escolha sua imagem de perfil</Text>
+          <Button
+            onPress={() => pickImage('profile')}
+            title="Upload Perfil"
+          />
+        </View>
+        {/* <Image source={{ uri: profileUrl }} /> */}
+
+        <View>
+          <Text style={styles.fakeSearchFieldText}>Escolha sua imagem de capa</Text>
+          <Button
+            onPress={() => pickImage('banner')}
+            title="Upload Banner"
+          />
+        </View>
+        {/* <Image source={{ uri: bannerUrl }} /> */}
+
+        { business.map((businessItem, index) =>
             <ProfileCard
-              key={businessItem.id}
+              key={index}
               name={businessItem.name}
               category={businessItem.category}
-              workImage={DummyImg}
-              avatar={DummyAvatar}
+              workImage={businessItem.bannerUrl}
+              avatar={businessItem.profileUrl}
               description={businessItem.about}
               onPress={handleNavigateToDetails}
-          />
+            />
           )
         }
       </ScrollView>
