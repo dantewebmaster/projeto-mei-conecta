@@ -25,6 +25,10 @@ export default function Partnerships() {
     navigation.navigate('Search');
   }
 
+  function handleNavigateToDetails() {
+    navigation.navigate('Details')
+  }
+
   // async function loadIncidents() {
   //   if (loading) {
   //     return;
@@ -53,7 +57,7 @@ export default function Partnerships() {
   return (
     <View style={styles.container}>
       <ScrollView
-        stickyHeaderIndices={[1]} // component with index [1] is sticky
+        // stickyHeaderIndices={[1]} // component with index [1] is sticky
         showsVerticalScrollIndicator={false}
         // bounces={false}
         // refreshing={false}
@@ -75,7 +79,7 @@ export default function Partnerships() {
           workImage={DummyImg}
           avatar={DummyAvatar}
           description="Sou designer de bijuterias, gosto de fazer semijóias com materiais antialergênicos e procuro por parceiros que queiram vender"
-          onPress={() => navigation.navigate('Details')}
+          onPress={handleNavigateToDetails}
         />
         <ProfileCard
           name="Fotografias para petshop"
@@ -83,7 +87,7 @@ export default function Partnerships() {
           workImage={DummyPetImg}
           avatar={DummyAvatar}
           description="Faço fotografias de animais para petshop e afins. Busco um parceiro do ramo de petshop para grandes lucros vendendo imagens para a TV por assinatura"
-          onPress={() => console.log('...')}
+          onPress={handleNavigateToDetails}
         />
         <ProfileCard
           name="Fotografias para petshop"
@@ -91,7 +95,7 @@ export default function Partnerships() {
           workImage={DummyPetImg}
           avatar={DummyAvatar}
           description="Faço fotografias de animais para petshop e afins. Busco um parceiro do ramo de petshop para grandes lucros vendendo imagens para a TV por assinatura"
-          onPress={() => console.log('...')}
+          onPress={handleNavigateToDetails}
         />
       </ScrollView>
     </View>
