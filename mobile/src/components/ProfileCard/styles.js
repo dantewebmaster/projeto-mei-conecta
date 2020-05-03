@@ -13,7 +13,7 @@ export default StyleSheet.create({
   },
   cardInfos: {
     flex: 1,
-    padding: 16,
+    padding: 8,
   },
   cardAvatar: {
     width: 40,
@@ -23,11 +23,11 @@ export default StyleSheet.create({
     borderColor: '#ddd',
   },
   cardWorkImage: {
-    width: 175,
+    width: 160,
     height: 175,
   },
   cardName: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#3858C1',
     marginBottom: 4,
   },
@@ -37,7 +37,7 @@ export default StyleSheet.create({
   },
   cardDescription: {
     color: '#999',
-    padding: 16,
+    padding: 8,
   },
   cardDivider: {
     borderTopWidth: 1,

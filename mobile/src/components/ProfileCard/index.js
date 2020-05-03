@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 
-
+// Icons
 import StarIcon from '../../assets/star.png';
 import StarGrayIcon from '../../assets/star_gray.png';
 
 import styles from './styles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function ProfileCard({
   avatar,
@@ -18,25 +17,27 @@ export default function ProfileCard({
   onPress,
 }) {
   return (
-    <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
-      <View style={styles.cardHeader}>
-        <View style={styles.cardInfos}>
-          <Image style={styles.cardAvatar} source={{ uri: avatar }} />
-          <Text style={styles.cardName}>{name}</Text>
-          <Text style={styles.cardCategory}>{category}</Text>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={styles.cardContainer}>
+        <View style={styles.cardHeader}>
+          <View style={styles.cardInfos}>
+            <Image style={styles.cardAvatar} source={{ uri: avatar }} />
+            <Text style={styles.cardName}>{name}</Text>
+            <Text style={styles.cardCategory}>{category}</Text>
 
-          <View style={styles.profileStars}>
-            <Image style={styles.star} source={StarIcon} />
-            <Image style={styles.star} source={StarIcon} />
-            <Image style={styles.star} source={StarIcon} />
-            <Image style={styles.star} source={StarIcon} />
-            <Image style={styles.star} source={StarGrayIcon} />
+            <View style={styles.profileStars}>
+              <Image style={styles.star} source={StarIcon} />
+              <Image style={styles.star} source={StarIcon} />
+              <Image style={styles.star} source={StarIcon} />
+              <Image style={styles.star} source={StarIcon} />
+              <Image style={styles.star} source={StarGrayIcon} />
+            </View>
           </View>
+          <Image style={styles.cardWorkImage} source={{ uri: workImage }} />
         </View>
-        <Image style={styles.cardWorkImage} source={{ uri: workImage }} />
+        <View style={styles.cardDivider} />
+        <Text style={styles.cardDescription}>{description}</Text>
       </View>
-      <View style={styles.cardDivider} />
-      <Text style={styles.cardDescription}>{description}</Text>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   )
 }

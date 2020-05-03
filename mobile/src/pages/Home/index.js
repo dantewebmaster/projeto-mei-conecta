@@ -74,6 +74,7 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <ScrollView
+        stickyHeaderIndices={[1]} // component with index [1] is sticky
         showsVerticalScrollIndicator={false}
       >
         <Image style={styles.logo} source={LogoPF} />
