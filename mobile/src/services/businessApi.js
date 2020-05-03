@@ -2,58 +2,63 @@ import { db } from '../firebase';
 
 const businessRef = db.collection('business');
 
-export default class BusinessApi {
-
-  getBusinessById = (businessId) => {
+export const getBusinessById = (businessId) => {
+  return new Promise((resolve, reject) => {
     businessRef.doc(businessId).get()
-    .then((result) => result.data)
-    .catch((error) => {
-      console.error(error);
-      return(error);
-    })
-  }
-
-  getAllBusiness = ({ category, name, uf, city }) => {
-    businessRef.where('category', '==', category)
-    .where('name', '==', name)
-    .where('uf', '==', uf)
-    .where('city', '==', city)
-    .get()
-    then((result) => result.id)
-    .catch((error) => {
-      console.error(error);
-      return(error);
-    })
-  }
-
-   addBusiness = (business) => {
-    return businessRef.add(business)
-    .then((result) => result.id)
-    .catch((error) => {
-      console.error(error);
-      return(error);
-    })
-  }
-
-  updateBusiness = (businessId, business) => {
-    return businessRef.doc(businessId).update(business)
-    .then((result) => result.id)
-    .catch((error) => {
-      console.error(error);
-      return(error);
-    })
-  }
-
-  removeBusiness = (businessId) => {
-    businessRef.doc(businessId).delete()
-    .then((result) => result.id)
-    .catch((error) => {
-      console.error(error);
-      return(error);
-    })
-  }
-
+    .then((doc) => resolve(doc.data()))
+    .catch((error) => reject(error));
+  });
 }
 
+export const getAllBusiness = ({ category, name, uf, city }) => {
+  let query = businessRef;
 
+  if (category) {
+    query = query.where('category', '==', category);
+  }
+  if (name) {
+    query = query.where('name', '==', name);
+  }
 
+  if (city) {
+    query = query.where('uf', '==', uf).where('city', '==', city);
+  } else if (uf) {
+    query = query.where('uf', '==', uf);
+  }
+  
+  return new Promise((resolve, reject) => {
+    query.get()
+    .then(function(querySnapshot) {
+      const results = [];
+      querySnapshot.forEach(function(doc) {
+        results.push(doc.data());
+      });
+      resolve(results);
+    })
+    .catch((error) => reject(error));
+  });
+}
+
+export const addBusiness = (business) => {
+  return new Promise((resolve, reject) => {
+    businessRef.add(business)
+    .then((doc) => resolve(doc.data()))
+    .catch((error) => reject(error));
+  });
+}
+
+export const updateBusiness = (businessId, business) => {
+  return new Promise((resolve, reject) => {
+    businessRef.doc(businessId).update(business)
+    .then((doc) => resolve(doc.data()))
+    .catch((error) => reject(error));
+  });
+}
+
+export const removeBusiness = (businessId) => {
+  return new Promise((resolve, reject) => {
+    businessRef.doc(businessId).delete()
+    .then(() => resolve())
+    .catch((error) => reject(error));
+  });
+}

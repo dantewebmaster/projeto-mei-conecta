@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, Button, FlatList, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 // import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-// import formatMoney from '../../utils/formatMoney';
-// import api from '../../services/api';
+import { getAllBusiness } from '../../services/businessApi';
 
 import LogoPF from '../../assets/logo-pf.png';
 import styles from './styles';
@@ -14,7 +13,7 @@ import DummyPetImg from '../../assets/pet.jpg';
 import DummyAvatar from '../../assets/paulo.png';
 
 export default function Partnerships() {
-  // const [incidents, setIncidents] = useState([]);
+  const [business, getBusiness] = useState([]);
   // const [total, setTotal] = useState(0);
   // const [page, setPage] = useState(1);
   // const [loading, setLoading] = useState(false);
@@ -54,6 +53,17 @@ export default function Partnerships() {
   //   loadIncidents();
   // }, []);
 
+  async function getBusinessList() {
+    await getAllBusiness()
+    .then((resp) => {
+      getBusiness([ ...resp ])})
+    .catch((error) => console.log(error));
+  }
+
+  useEffect(() => {
+    getBusinessList();
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -73,30 +83,19 @@ export default function Partnerships() {
           </View>
         </TouchableOpacity>
 
-        <ProfileCard
-          name="Elina Naomi"
-          category="Design"
-          workImage={DummyImg}
-          avatar={DummyAvatar}
-          description="Sou designer de bijuterias, gosto de fazer semijóias com materiais antialergênicos e procuro por parceiros que queiram vender"
-          onPress={handleNavigateToDetails}
-        />
-        <ProfileCard
-          name="Fotografias para petshop"
-          category="Designer"
-          workImage={DummyPetImg}
-          avatar={DummyAvatar}
-          description="Faço fotografias de animais para petshop e afins. Busco um parceiro do ramo de petshop para grandes lucros vendendo imagens para a TV por assinatura"
-          onPress={handleNavigateToDetails}
-        />
-        <ProfileCard
-          name="Fotografias para petshop"
-          category="Designer"
-          workImage={DummyPetImg}
-          avatar={DummyAvatar}
-          description="Faço fotografias de animais para petshop e afins. Busco um parceiro do ramo de petshop para grandes lucros vendendo imagens para a TV por assinatura"
-          onPress={handleNavigateToDetails}
-        />
+        { 
+          business.map((businessItem) => 
+            <ProfileCard
+              key={businessItem.id}
+              name={businessItem.name}
+              category={businessItem.category}
+              workImage={DummyImg}
+              avatar={DummyAvatar}
+              description={businessItem.about}
+              onPress={handleNavigateToDetails}
+          />
+          )
+        }
       </ScrollView>
     </View>
   )
