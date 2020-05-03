@@ -8,7 +8,8 @@ import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 // import Logo from '../../assets/logo.png';
 import styles from './styles';
 
-const Detail = () => {
+const Profile = () => {
+
   // const navigation = useNavigation();
   // const route = useRoute();
 
@@ -33,9 +34,9 @@ const Detail = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Detalhes...</Text>
+      <Text>Meu Perfil...</Text>
     </View>
   )
 }
 
-export default Detail
+export default Profile

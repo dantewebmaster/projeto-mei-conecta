@@ -8,7 +8,7 @@ import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 // import Logo from '../../assets/logo.png';
 import styles from './styles';
 
-export default function Home() {
+export default function Partnerships() {
   // const [incidents, setIncidents] = useState([]);
   // const [total, setTotal] = useState(0);
   // const [page, setPage] = useState(1);
@@ -47,7 +47,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Text>Home</Text>
+      <Text>Home...</Text>
     </View>
   )
 }
