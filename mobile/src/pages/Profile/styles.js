@@ -52,6 +52,7 @@ export default StyleSheet.create({
   },
   workImg: {
     width: '100%',
+    height: 300,
     marginTop: 8,
   },
   workTitle: {
