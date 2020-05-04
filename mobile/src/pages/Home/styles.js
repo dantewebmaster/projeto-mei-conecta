@@ -8,14 +8,13 @@ export default StyleSheet.create({
     paddingTop: Constants.statusBarHeight + 20,
   },
   logo: {
-    width: 150,
-    height: 24,
+    height: 'auto',
     alignSelf: 'center',
-    backgroundColor: '#ddd',
     resizeMode: 'cover',
     marginVertical: 16,
   },
 
+  // Componentizar
   fakeSearchFieldContainer: {
     paddingBottom: 8,
     backgroundColor: '#fff',
@@ -27,7 +26,7 @@ export default StyleSheet.create({
     paddingLeft: 24,
     flexDirection: 'row',
     borderWidth: 1,
-    borderColor: '#d7d7d7',
+    borderColor: '#ddd',
     width: '100%',
     height: 60,
     backgroundColor: '#fff',

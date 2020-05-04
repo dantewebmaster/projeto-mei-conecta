@@ -8,14 +8,14 @@ import * as ImagePicker from 'expo-image-picker';
 
 import { Feather } from '@expo/vector-icons';
 
-import LogoPF from '../../assets/logo-pf.png';
+import Logo from '../../assets/logo.svg';
 import styles from './styles';
 import ProfileCard from '../../components/ProfileCard';
 
 export default function Home() {
   const [business, getBusiness] = useState([]);
-  const [profileUrl, setProfileUrl] = useState('');
-  const [bannerUrl, setBannerUrl] = useState('');
+  // const [profileUrl, setProfileUrl] = useState('');
+  // const [bannerUrl, setBannerUrl] = useState('');
   const navigation = useNavigation();
 
   function navigateToSearch() {
@@ -79,7 +79,9 @@ export default function Home() {
         stickyHeaderIndices={[1]} // component with index [1] is sticky
         showsVerticalScrollIndicator={false}
       >
-        <Image style={styles.logo} source={LogoPF} />
+        <View style={styles.logo}>
+          <Logo width={200} height={60} />
+        </View>
 
         <TouchableOpacity
           onPress={navigateToSearch}
