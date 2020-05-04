@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   cardContainer: {
     borderWidth: 1,
-    borderColor: '#979797',
+    borderColor: '#ddd',
     marginTop: 8,
     marginBottom: 8,
     borderRadius: 6,
@@ -24,7 +24,7 @@ export default StyleSheet.create({
   },
   cardWorkImage: {
     width: 160,
-    height: 175,
+    height: 165,
   },
   cardName: {
     fontSize: 18,
@@ -41,18 +41,6 @@ export default StyleSheet.create({
   },
   cardDivider: {
     borderTopWidth: 1,
-    borderTopColor: '#979797',
-  },
-
-  // componentizar
-  profileStars: {
-    marginTop: 8,
-    flexDirection: 'row',
-    flex: 1,
-  },
-  star: {
-    width: 14,
-    height: 14,
-    marginRight: 6,
+    borderTopColor: '#ddd',
   },
 });

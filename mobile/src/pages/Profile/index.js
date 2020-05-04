@@ -53,7 +53,6 @@ export default function Profile() {
             <Rating
               disabled
               count={3.5}
-              onReview={e => console.log(e)}
             />
           </View>
           <ButtonEdit onPress={() => console.log('Editando...')} />

@@ -21,22 +21,13 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
   },
   fakeSearchField: {
-    marginBottom: 16,
-    marginTop: 16,
-    justifyContent: 'center',
-    paddingVertical: 16,
+    marginVertical: 8,
+    alignItems: 'center',
+    paddingVertical: 8,
     paddingLeft: 24,
-    shadowColor: "#ddd",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 4.65,
-
+    flexDirection: 'row',
     borderWidth: 1,
     borderColor: '#d7d7d7',
-    elevation: 8,
     width: '100%',
     height: 60,
     backgroundColor: '#fff',
@@ -44,5 +35,7 @@ export default StyleSheet.create({
   },
   fakeSearchFieldText: {
     fontSize: 22,
+    color: '#999',
+    marginLeft: 16,
   },
 });

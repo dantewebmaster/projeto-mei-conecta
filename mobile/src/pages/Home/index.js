@@ -6,6 +6,8 @@ import { addImage } from '../../services/storageApi';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 
+import { Feather } from '@expo/vector-icons';
+
 import LogoPF from '../../assets/logo-pf.png';
 import styles from './styles';
 import ProfileCard from '../../components/ProfileCard';
@@ -84,6 +86,7 @@ export default function Home() {
           style={styles.fakeSearchFieldContainer}
         >
           <View style={styles.fakeSearchField}>
+            <Feather name="search" size={22} color="#999" />
             <Text style={styles.fakeSearchFieldText}>O que você procura?</Text>
           </View>
         </TouchableOpacity>
