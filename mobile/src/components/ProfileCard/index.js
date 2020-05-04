@@ -17,7 +17,7 @@ export default function ProfileCard({
       <View style={styles.cardContainer}>
         <View style={styles.cardHeader}>
           <View style={styles.cardInfos}>
-            <Image style={styles.cardAvatar} source={avatar} />
+            <Image style={styles.cardAvatar} source={{ uri: avatar }} />
             <Text style={styles.cardName}>{name}</Text>
             <Text style={styles.cardCategory}>{category}</Text>
 
@@ -26,7 +26,7 @@ export default function ProfileCard({
               count={rating}
             />
           </View>
-          <Image style={styles.cardWorkImage} source={workImage} />
+          <Image style={styles.cardWorkImage} source={{ uri: workImage }} />
         </View>
         <View style={styles.cardDivider} />
         <Text style={styles.cardDescription}>{description}</Text>

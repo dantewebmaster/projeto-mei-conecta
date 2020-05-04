@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, Button, FlatList, TextInput, ScrollView, TouchableOpacity } from 'react-native';
-// import { Feather } from '@expo/vector-icons';
+import { View, Text, Image, Button, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-// import formatMoney from '../../utils/formatMoney';
-// import api from '../../services/api';
+import { getAllBusiness } from '../../services/businessApi';
+import { addImage } from '../../services/storageApi';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
 
 import { Feather } from '@expo/vector-icons';
 
@@ -11,16 +12,10 @@ import LogoPF from '../../assets/logo-pf.png';
 import styles from './styles';
 import ProfileCard from '../../components/ProfileCard';
 
-import DummyImg from '../../assets/dummy-img.png';
-import DummyPetImg from '../../assets/pet.jpg';
-import DummyAvatar from '../../assets/paulo.png';
-
-export default function Partnerships() {
-  // const [incidents, setIncidents] = useState([]);
-  // const [total, setTotal] = useState(0);
-  // const [page, setPage] = useState(1);
-  // const [loading, setLoading] = useState(false);
-
+export default function Home() {
+  const [business, getBusiness] = useState([]);
+  const [profileUrl, setProfileUrl] = useState('');
+  const [bannerUrl, setBannerUrl] = useState('');
   const navigation = useNavigation();
 
   function navigateToSearch() {
@@ -31,38 +26,58 @@ export default function Partnerships() {
     navigation.navigate('Details')
   }
 
-  // async function loadIncidents() {
-  //   if (loading) {
-  //     return;
-  //   }
+  async function getBusinessList() {
+    await getAllBusiness({})
+    .then((resp) => {
+      getBusiness([ ...resp ])})
+    .catch((error) => console.log(error));
+  }
 
-  //   if (total > 0 && incidents.length === total) {
-  //     return;
-  //   }
+  useEffect(() => {
+    getBusinessList();
+  }, []);
 
-  //   setLoading(true);
+  pickImage = async (type) => {
+    const {
+      status: cameraRollPerm
+    } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
 
-  //   const response = await api.get('/incidents', {
-  //     params: { page }
-  //   });
+    if (cameraRollPerm === 'granted') {
+      let pickerResult = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        base64: true,
+        aspect: [4, 4],
+      });
 
-  //   setTotal(response.headers['x-total-count']);
-  //   setIncidents([...incidents, ...response.data]);
-  //   setPage(page + 1);
-  //   setLoading(false);
-  // }
+      if (!pickerResult.cancelled) {
+        type === 'profile' ? setProfileUrl(pickerResult.uri) : setBannerUrl(pickerResult.uri);
+      }
+      uploadImageAsync(pickerResult.uri, type);
+    }
+  };
 
-  // useEffect(() => {
-  //   loadIncidents();
-  // }, []);
+  async function uploadImageAsync (pictureUri, type) {
+      const data = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+          resolve(xhr.response);
+        };
+        xhr.onerror = function() {
+          reject(new Error('uriToBlob failed'));
+        };
+        xhr.responseType = 'blob';
+        xhr.open('GET', pictureUri, true);
+        xhr.send(null);
+      });
+
+    addImage('vBcnsrdMCzzzdTLWiPf6', type, data);
+  }
 
   return (
     <View style={styles.container}>
       <ScrollView
         stickyHeaderIndices={[1]} // component with index [1] is sticky
         showsVerticalScrollIndicator={false}
-        // bounces={false}
-        // refreshing={false}
       >
         <Image style={styles.logo} source={LogoPF} />
 
@@ -76,33 +91,36 @@ export default function Partnerships() {
           </View>
         </TouchableOpacity>
 
-        <ProfileCard
-          name="Elina Naomi"
-          category="Design"
-          rating={3}
-          workImage={DummyImg}
-          avatar={DummyAvatar}
-          description="Sou designer de bijuterias, gosto de fazer semijóias com materiais antialergênicos e procuro por parceiros que queiram vender"
-          onPress={handleNavigateToDetails}
-        />
-        <ProfileCard
-          name="Fotografias para petshop"
-          category="Designer"
-          rating={2}
-          workImage={DummyPetImg}
-          avatar={DummyAvatar}
-          description="Faço fotografias de animais para petshop e afins. Busco um parceiro do ramo de petshop para grandes lucros vendendo imagens para a TV por assinatura"
-          onPress={handleNavigateToDetails}
-        />
-        <ProfileCard
-          name="Fotografias para petshop"
-          category="Designer"
-          rating={4.5}
-          workImage={DummyPetImg}
-          avatar={DummyAvatar}
-          description="Faço fotografias de animais para petshop e afins. Busco um parceiro do ramo de petshop para grandes lucros vendendo imagens para a TV por assinatura"
-          onPress={handleNavigateToDetails}
-        />
+        <View>
+          <Text style={styles.fakeSearchFieldText}>Escolha sua imagem de perfil</Text>
+          <Button
+            onPress={() => pickImage('profile')}
+            title="Upload Perfil"
+          />
+        </View>
+        {/* <Image source={{ uri: profileUrl }} /> */}
+
+        <View>
+          <Text style={styles.fakeSearchFieldText}>Escolha sua imagem de capa</Text>
+          <Button
+            onPress={() => pickImage('banner')}
+            title="Upload Banner"
+          />
+        </View>
+        {/* <Image source={{ uri: bannerUrl }} /> */}
+
+        { business.map((businessItem, index) =>
+            <ProfileCard
+              key={index}
+              name={businessItem.name}
+              category={businessItem.category}
+              workImage={businessItem.bannerUrl}
+              avatar={businessItem.profileUrl}
+              description={businessItem.about}
+              onPress={handleNavigateToDetails}
+            />
+          )
+        }
       </ScrollView>
     </View>
   )
