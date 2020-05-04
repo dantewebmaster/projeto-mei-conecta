@@ -2,60 +2,51 @@ import { db } from '../firebase';
 
 const partnershipRef = db.collection('partnership');
 
-export default class PartnershipApi {
-
-  getPartnershipById = (parnetshipId) => {
+export const getPartnershipById = (parnetshipId) => {
+  return new Promise((resolve, reject) => {
     partnershipRef.doc(parnetshipId).get()
-    .then((result) => result.data)
-    .catch((error) => {
-      console.error(error);
-      return(error);
-    })
-  }
+      .then((result) => resolve(result.data))
+      .catch((error) => reject(error));
+  });
+}
 
-  getAllPartnership = (businessId) => {
-    partnershipRef.where('businessId', '==', businessId)
-    .where('name', '==', name)
-    .where('uf', '==', uf)
-    .where('city', '==', city)
-    .get()
-    then((result) => result.id)
-    .catch((error) => {
-      console.error(error);
-      return(error);
+export const getAllPartnership = (businessId) => {
+  return new Promise((resolve, reject) => {
+    partnershipRef.where('fromBusinessId', '==', businessId).get()
+    .then(function(querySnapshot) {
+      const results = [];
+      querySnapshot.forEach(function(doc) {
+        results.push(doc.data());
+      });
+      resolve(results);
     })
-  }
+    .catch((error) => reject(error));
+  });
+}
+  
+export const addPartnership = (partnership) => {
+  return new Promise((resolve, reject) => {
+    partnershipRef.add(partnership)
+    .then((doc) => resolve(doc.data()))
+    .catch((error) => reject(error));
+  });
+}
 
-  addPartnership = (partnership) => {
-    return partnershipRef.add(partnership)
-    .then((result) => result.id)
-    .catch((error) => {
-      console.error(error);
-      return(error);
-    })
-  }
+export const updatePartnership = (partnershipId, partnership) => {
+  return new Promise((resolve, reject) => {
+    partnershipRef.doc(partnershipId).update(partnership)
+    .then((doc) => resolve(doc.data()))
+    .catch((error) => reject(error));
+  });
+}
 
-  updatePartnership = (partnershipId, partnership) => {
-    return partnershipRef.doc(partnershipId).update(partnership)
-    .then((result) => result.id)
-    .catch((error) => {
-      console.error(error);
-      return(error);
-    })
-  }
-
-  removePartnership = (partnershipId) => {
+export const removePartnership = (partnershipId) => {
+  return new Promise((resolve, reject) => {
     partnershipRef.doc(partnershipId).set({
       status: 3, // canceled
       updateAt: firebase.firestore.FieldValue.serverTimestamp(),
-    }).then((result) => result.id)
-    .catch((error) => {
-      console.error(error);
-      return(error);
     })
-  }
-
+    .then(() => resolve())
+    .catch((error) => reject(error));
+  });
 }
-
-
-

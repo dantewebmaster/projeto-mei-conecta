@@ -34,7 +34,6 @@ export default function Home() {
     async function getCategoriesList() {
       await getAllCategory()
       .then((resp) => {
-        console.log('Categories', resp)
         getCategories([ ...resp ])})
       .catch((error) => console.log(error));
     }
