@@ -7,42 +7,55 @@ export default StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: Constants.statusBarHeight + 20,
   },
-  logo: {
-    width: 150,
-    height: 24,
-    alignSelf: 'center',
-    backgroundColor: '#ddd',
-    resizeMode: 'cover',
+  headerProfile: {
+    flexDirection: 'row',
     marginVertical: 16,
   },
-
-  fakeSearchFieldContainer: {
-    paddingBottom: 8,
-    backgroundColor: '#fff',
+  profileInfo: {
+    flex: 1,
   },
-  fakeSearchField: {
+  profileAvatar: {
+    backgroundColor: '#d7d7d7',
+    borderRadius: 80,
+    height: 80,
+    width: 80,
+    marginRight: 16,
+  },
+  profileName: {
+    color: '#3858C1',
+    fontSize: 18,
+  },
+  profileCategory: {
+    fontSize: 14,
+    color: '#333',
+    marginBottom: 5,
+  },
+  profileDescription: {
+    fontSize: 14,
+    color: '#999',
     marginBottom: 16,
-    marginTop: 16,
-    justifyContent: 'center',
-    paddingVertical: 16,
-    paddingLeft: 24,
-    shadowColor: "#ddd",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 4.65,
-
-    borderWidth: 1,
-    borderColor: '#d7d7d7',
-    elevation: 8,
-    width: '100%',
-    height: 60,
-    backgroundColor: '#fff',
-    borderRadius: 6,
   },
-  fakeSearchFieldText: {
-    fontSize: 22,
+  workFeaturedImg: {
+    alignItems: 'flex-end',
+  },
+  workImg: {
+    width: '100%',
+    marginTop: 8,
+  },
+  workTitle: {
+    fontSize: 24,
+    marginVertical: 8,
+  },
+  workDescription: {
+    color: '#999',
+  },
+  socialNetwork: {
+    width: '100%',
+    flexDirection: 'row',
+    marginTop: 16,
+    marginBottom: 40,
+  },
+  socialButton: {
+    marginRight: 16,
   },
 });

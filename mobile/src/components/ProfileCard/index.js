@@ -1,10 +1,6 @@
 import React from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
-
-// Icons
-import StarIcon from '../../assets/star.png';
-import StarGrayIcon from '../../assets/star_gray.png';
-
+import Rating from '../Rating';
 import styles from './styles';
 
 export default function ProfileCard({
@@ -25,13 +21,10 @@ export default function ProfileCard({
             <Text style={styles.cardName}>{name}</Text>
             <Text style={styles.cardCategory}>{category}</Text>
 
-            <View style={styles.profileStars}>
-              <Image style={styles.star} source={StarIcon} />
-              <Image style={styles.star} source={StarIcon} />
-              <Image style={styles.star} source={StarIcon} />
-              <Image style={styles.star} source={StarIcon} />
-              <Image style={styles.star} source={StarGrayIcon} />
-            </View>
+            <Rating
+              disabled
+              count={rating}
+            />
           </View>
           <Image style={styles.cardWorkImage} source={workImage} />
         </View>

@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 // import formatMoney from '../../utils/formatMoney';
 // import api from '../../services/api';
 
+import { Feather } from '@expo/vector-icons';
+
 import LogoPF from '../../assets/logo-pf.png';
 import styles from './styles';
 import ProfileCard from '../../components/ProfileCard';
@@ -69,6 +71,7 @@ export default function Partnerships() {
           style={styles.fakeSearchFieldContainer}
         >
           <View style={styles.fakeSearchField}>
+            <Feather name="search" size={22} color="#999" />
             <Text style={styles.fakeSearchFieldText}>O que você procura?</Text>
           </View>
         </TouchableOpacity>
@@ -76,6 +79,7 @@ export default function Partnerships() {
         <ProfileCard
           name="Elina Naomi"
           category="Design"
+          rating={3}
           workImage={DummyImg}
           avatar={DummyAvatar}
           description="Sou designer de bijuterias, gosto de fazer semijóias com materiais antialergênicos e procuro por parceiros que queiram vender"
@@ -84,6 +88,7 @@ export default function Partnerships() {
         <ProfileCard
           name="Fotografias para petshop"
           category="Designer"
+          rating={2}
           workImage={DummyPetImg}
           avatar={DummyAvatar}
           description="Faço fotografias de animais para petshop e afins. Busco um parceiro do ramo de petshop para grandes lucros vendendo imagens para a TV por assinatura"
@@ -92,6 +97,7 @@ export default function Partnerships() {
         <ProfileCard
           name="Fotografias para petshop"
           category="Designer"
+          rating={4.5}
           workImage={DummyPetImg}
           avatar={DummyAvatar}
           description="Faço fotografias de animais para petshop e afins. Busco um parceiro do ramo de petshop para grandes lucros vendendo imagens para a TV por assinatura"
