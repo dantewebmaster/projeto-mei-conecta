@@ -4,8 +4,7 @@ export default StyleSheet.create({
   cardContainer: {
     borderWidth: 1,
     borderColor: '#ddd',
-    marginTop: 8,
-    marginBottom: 8,
+    marginVertical: 8,
     borderRadius: 6,
   },
   cardHeader: {
