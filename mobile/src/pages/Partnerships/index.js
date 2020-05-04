@@ -7,8 +7,13 @@ import styles from './styles';
 import Header from '../../components/Header';
 import Rating from '../../components/Rating';
 
-const Detail = () => {
-  const [partnerships, getPartnerships] = useState({});
+const Partnership = () => {
+  const [partnerships, getPartnerships] = useState({
+    pending: [],
+    accepted: [],
+    rejected: [],
+    canceled: [],
+  });
 
   const navigation = useNavigation();
 
@@ -120,4 +125,4 @@ const Detail = () => {
   )
 }
 
-export default Detail;
+export default Partnership;
