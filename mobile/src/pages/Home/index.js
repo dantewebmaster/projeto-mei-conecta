@@ -22,8 +22,8 @@ export default function Home() {
     navigation.navigate('Search');
   }
 
-  function handleNavigateToDetails() {
-    navigation.navigate('Details')
+  function handleNavigateToDetails(businessId) {
+    navigation.navigate('Details', { businessId })
   }
 
   async function getBusinessList() {
@@ -116,10 +116,11 @@ export default function Home() {
               key={index}
               name={businessItem.name}
               category={businessItem.category}
+              rating={businessItem.rating}
               workImage={businessItem.bannerUrl}
               avatar={businessItem.profileUrl}
               description={businessItem.about}
-              onPress={handleNavigateToDetails}
+              onPress={() => handleNavigateToDetails(businessItem.id)}
             />
           )
         }
