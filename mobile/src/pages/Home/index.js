@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, Button, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getAllBusiness } from '../../services/businessApi';
+import { getAllCategory } from '../../services/categoryApi';
 
 import { Feather } from '@expo/vector-icons';
 
@@ -11,6 +12,7 @@ import ProfileCard from '../../components/ProfileCard';
 
 export default function Home() {
   const [business, getBusiness] = useState([]);
+  const [categories, getCategories] = useState([]);
   const navigation = useNavigation();
 
   function navigateToSearch() {
@@ -29,7 +31,15 @@ export default function Home() {
       .catch((error) => console.log(error));
     }
 
+    async function getCategoriesList() {
+      await getAllCategory()
+      .then((resp) => {
+        getCategories([ ...resp ])})
+      .catch((error) => console.log(error));
+    }
+
     getBusinessList();
+    getCategoriesList();
   }, []);
 
   return (

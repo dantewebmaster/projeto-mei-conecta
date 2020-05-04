@@ -56,7 +56,7 @@ export default function Routes() {
             name="Search"
             component={Search}
             options={{
-              tabBarLabel: 'Buscar parceiria'
+              tabBarLabel: 'Buscar parceria'
             }}
           />
           <Tab.Screen

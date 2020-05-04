@@ -1,37 +1,36 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, Linking, ScrollView } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-// import * as MailComposer from 'expo-mail-composer';
-// import formatMoney from '../../utils/formatMoney';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { getAllPartnership } from '../../services/partnershipApi';
 
 import styles from './styles';
 import Header from '../../components/Header';
-import DummyAvatar from '../../assets/paulo.png';
 import Rating from '../../components/Rating';
 
 const Detail = () => {
+  const [partnerships, getPartnerships] = useState({});
 
   const navigation = useNavigation();
-  // const route = useRoute();
-
-  // // const incident = route.params.incident;
-  // const message = 'Corpo da mensagem...';
 
   function navigateBack() {
     navigation.goBack();
   }
 
-  // function sendMail() {
-  //   MailComposer.composeAsync({
-  //     subject: 'Herói do caso: Dalila quer sachê!',
-  //     recipients: [incident.email],
-  //     body: message,
-  //   })
-  // }
+  useEffect(() => {
+    async function getParnershipList() {
+      await getAllPartnership('vBcnsrdMCzzzdTLWiPf6')
+      .then((resp) => {
+        getPartnerships({
+          pending: resp.filter(p => p.status === 0),
+          accepted: resp.filter(p => p.status === 1),
+          rejected: resp.filter(p => p.status === 2),
+          canceled: resp.filter(p => p.status === 3),
+        })})
+      .catch((error) => console.log(error));
+    }
 
-  // function sendWhatsapp() {
-  //   Linking.openURL(`whatsapp://send?phone=${incident.whatsapp}&text=${message}`);
-  // }
+    getParnershipList();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -41,54 +40,84 @@ const Detail = () => {
       />
 
       <ScrollView style={styles.messagesContainer}>
-        <View style={styles.messagesSection}>
-          <Text style={styles.heading1}>Enviadas</Text>
+        { partnerships.pending.length > 0 && (
+          <View style={styles.messagesSection}>
+            <Text style={styles.heading1}>Pendentes</Text>
+            {/* Componentizar (Badge) */}
+            <Text style={styles.badge}>{partnerships.pending.length}</Text>
+            {/* Componentizar (MessageCard) */}
+            { partnerships.pending.map(p => (
+              <View style={styles.messageCard}>
+                <Image style={styles.messageAvatar} source={{ uri: p.toBusinessId.profileUrl}} />
+                <View style={styles.messageInfos}>
+                  <Text style={styles.messageName}>{ p.toBusinessId.name }</Text>
+                  <Text style={styles.category}>{ p.toBusinessId.category }</Text>
+                  <Rating count={ p.toBusinessId.rating } />
+                </View>
+              </View>
+            ))}
+          </View>
+        )}
 
-          {/* Componentizar (Badge) */}
-          <Text style={styles.badge}>99</Text>
+        { partnerships.accepted.length > 0 && (
+          <View style={styles.messagesSection}>
+            <Text style={styles.heading1}>Aceitas</Text>
+            {/* Componentizar (Badge) */}
+            <Text style={styles.badge}>{partnerships.accepted.length}</Text>
+            {/* Componentizar (MessageCard) */}
+            { partnerships.accepted.map(p => (
+              <View style={styles.messageCard}>
+                <Image style={styles.messageAvatar} source={{ uri: p.toBusinessId.profileUrl}} />
+                <View style={styles.messageInfos}>
+                  <Text style={styles.messageName}>{ p.toBusinessId.name }</Text>
+                  <Text style={styles.category}>{ p.toBusinessId.category }</Text>
+                  <Rating count={ p.toBusinessId.rating } />
+                </View>
+              </View>
+            ))}
+          </View>
+        )}
 
-          {/* Componentizar (MessageCard) */}
-          <View style={styles.messageCard}>
-            <Image style={styles.messageAvatar} source={DummyAvatar} />
-            <View style={styles.messageInfos}>
-              <Text style={styles.messageName}>Elina Naomi</Text>
-              <Text style={styles.category}>Designer</Text>
-              <Rating count={3} />
-            </View>
+        { partnerships.rejected.length > 0 && (
+          <View style={styles.messagesSection}>
+            <Text style={styles.heading1}>Recusadas</Text>
+            {/* Componentizar (Badge) */}
+            <Text style={styles.badge}>{partnerships.rejected.length}</Text>
+            {/* Componentizar (MessageCard) */}
+            { partnerships.rejected.map(p => (
+              <View style={styles.messageCard}>
+                <Image style={styles.messageAvatar} source={{ uri: p.toBusinessId.profileUrl}} />
+                <View style={styles.messageInfos}>
+                  <Text style={styles.messageName}>{ p.toBusinessId.name }</Text>
+                  <Text style={styles.category}>{ p.toBusinessId.category }</Text>
+                  <Rating count={ p.toBusinessId.rating } />
+                </View>
+              </View>
+            ))}
           </View>
-          <View style={styles.messageCard}>
-            <Image style={styles.messageAvatar} source={DummyAvatar} />
-            <View style={styles.messageInfos}>
-              <Text style={styles.messageName}>Elina Naomi</Text>
-              <Text style={styles.category}>Designer</Text>
-              <Rating count={3} />
-            </View>
-          </View>
-        </View>
+        )}
 
-        <View style={styles.messagesSection}>
-          <Text style={styles.heading1}>Respondidas</Text>
-          {/* Componentizar (MessageCard) */}
-          <View style={styles.messageCard}>
-            <Image style={styles.messageAvatar} source={DummyAvatar} />
-            <View style={styles.messageInfos}>
-              <Text style={styles.messageName}>Elina Naomi</Text>
-              <Text style={styles.category}>Designer</Text>
-              <Rating count={3} />
-            </View>
+        { partnerships.canceled.length > 0 && (
+          <View style={styles.messagesSection}>
+            <Text style={styles.heading1}>Canceladas</Text>
+            {/* Componentizar (Badge) */}
+            <Text style={styles.badge}>{partnerships.canceled.length}</Text>
+            {/* Componentizar (MessageCard) */}
+            { partnerships.canceled.map(p => (
+              <View style={styles.messageCard}>
+                <Image style={styles.messageAvatar} source={{ uri: p.toBusinessId.profileUrl}} />
+                <View style={styles.messageInfos}>
+                  <Text style={styles.messageName}>{ p.toBusinessId.name }</Text>
+                  <Text style={styles.category}>{ p.toBusinessId.category }</Text>
+                  <Rating count={ p.toBusinessId.rating } />
+                </View>
+              </View>
+            ))}
           </View>
-          <View style={styles.messageCard}>
-            <Image style={styles.messageAvatar} source={DummyAvatar} />
-            <View style={styles.messageInfos}>
-              <Text style={styles.messageName}>Elina Naomi</Text>
-              <Text style={styles.category}>Designer</Text>
-              <Rating count={3} />
-            </View>
-          </View>
-        </View>
+        )}
       </ScrollView>
     </View>
   )
 }
 
-export default Detail
+export default Detail;
