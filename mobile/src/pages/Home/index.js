@@ -70,7 +70,7 @@ export default function Home() {
         xhr.send(null);
       });
 
-    addImage('le2ne2gJoS55byK3YeZX', type, data);
+    addImage('vBcnsrdMCzzzdTLWiPf6', type, data);
   }
 
   return (

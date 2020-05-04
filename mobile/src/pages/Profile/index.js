@@ -1,41 +1,31 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
-
-// import * as MailComposer from 'expo-mail-composer';
-// import formatMoney from '../../utils/formatMoney';
-
 import styles from './styles';
 import Header from '../../components/Header';
-
-import DummyAvatar from '../../assets/paulo.png';
-import DummyImg from '../../assets/dummy-img.png';
+import { getBusinessById } from '../../services/businessApi';
 import ButtonEdit from '../../components/ButtonEdit';
 import Rating from '../../components/Rating';
 
 export default function Profile() {
   const navigation = useNavigation();
-  // const route = useRoute();
-
-  // // const incident = route.params.incident;
-  // const message = 'Corpo da mensagem...';
+  const [profile, getProfile] = useState({});
 
   function navigateBack() {
     navigation.goBack();
   }
 
-  // function sendMail() {
-  //   MailComposer.composeAsync({
-  //     subject: 'Herói do caso: Dalila quer sachê!',
-  //     recipients: [incident.email],
-  //     body: message,
-  //   })
-  // }
+  async function getMyProfile() {
+    await getBusinessById('vBcnsrdMCzzzdTLWiPf6')
+    .then((resp) => {
+      getProfile({ ...resp })})
+    .catch((error) => console.log(error));
+  }
 
-  // function sendWhatsapp() {
-  //   Linking.openURL(`whatsapp://send?phone=${incident.whatsapp}&text=${message}`);
-  // }
+  useEffect(() => {
+    getMyProfile();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -46,48 +36,47 @@ export default function Profile() {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.headerProfile}>
-          <Image style={styles.profileAvatar} source={DummyAvatar} />
+          <Image style={styles.profileAvatar} source={{ uri: profile.profileUrl}} />
           <View style={styles.profileInfo}>
-            <Text style={styles.profileName}>Marcenaria Paulo</Text>
-            <Text style={styles.profileCategory}>Marcenaria</Text>
+            <Text style={styles.profileName}>{profile.name}</Text>
+            <Text style={styles.profileCategory}>{profile.category}</Text>
             <Rating
               disabled
-              count={3.5}
+              count={profile.rating}
             />
           </View>
           <ButtonEdit onPress={() => console.log('Editando...')} />
         </View>
 
-        <Text style={styles.profileDescription}>
-          Sou designer de bijuterias, gosto de fazer semijóias com materiais antialergênicos e procuro por parceiros que queiram vender
-        </Text>
+        <Text style={styles.profileDescription}>{ profile.about }</Text>
 
         <View style={styles.workSection}>
           <View style={styles.workFeaturedImg}>
             <ButtonEdit onPress={() => console.log('Editando...')} />
-            <Image style={styles.workImg} source={DummyImg} />
+            <Image style={styles.workImg} source={{ uri: profile.bannerUrl}} />
           </View>
 
           <Text style={styles.workTitle}>O que eu faço</Text>
 
-          <Text style={styles.workDescription}>
-          Maecenas a purus vulputate, ultricies erat sed, sagittis dolor. Mauris sit amet scelerisque libero. Morbi eleifend aliquam ipsum, vel feugiat magna elementum et. Nunc iaculis porta nisi, id malesuada nulla ultricies in. Duis ornare sapien nec justo viverra, vitae eleifend urna efficitur. Integer elit nisi, tempor sed arcu at, fermentum imperdiet risus. Proin lacinia placerat ligula, non imperdiet sem tincidunt vitae. Nunc iaculis porta nisi, id malesuada nulla ultricies in. Duis ornare sapien nec justo viverra, vitae eleifend urna efficitur. Integer elit nisi, tempor sed arcu at, fermentum imperdiet risus. Proin lacinia placerat ligula, non imperdiet sem tincidunt vitae.
-          </Text>
+          <Text style={styles.workDescription}>{ profile.description }</Text>
 
           <View style={styles.socialNetwork}>
             <View style={{ flex: 1, flexDirection: 'row' }}>
               <TouchableOpacity
                 style={styles.socialButton}
+                onPress={()=>{ Linking.openURL(profile.socialNetworks.facebook)}}
               >
                 <Feather name="facebook" size={24} color="#3858C1" />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.socialButton}
+                onPress={()=>{ Linking.openURL(profile.socialNetworks.instagram)}}
               >
                 <Feather name="instagram" size={24} color="#3858C1" />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.socialButton}
+                onPress={()=>{ Linking.openURL(profile.socialNetworks.linkedin)}}
               >
                 <Feather name="linkedin" size={24} color="#3858C1" />
               </TouchableOpacity>
