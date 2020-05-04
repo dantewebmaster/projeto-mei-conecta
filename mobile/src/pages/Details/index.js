@@ -119,6 +119,8 @@ export default function Profile() {
           value={text}
           placeholder="Sua mensagem para Elina"
           onChange={(text) => setText(text)}
+          multiline
+          numberOfLines={8}
         />
         <Button
           buttonLabel="Enviar mensagem"
