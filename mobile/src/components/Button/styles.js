@@ -8,6 +8,7 @@ export default StyleSheet.create({
     marginBottom: 16,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
   },
   buttonLabel: {
     color: '#fff',

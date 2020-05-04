@@ -1,8 +1,12 @@
 import React from 'react';
-import { View, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import ReactNativeModal from 'react-native-modal';
 import { Feather } from '@expo/vector-icons';
-import Constants from 'expo-constants';
 
 import styles from './styles';
 

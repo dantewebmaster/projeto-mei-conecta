@@ -5,8 +5,6 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  TextInput,
-  KeyboardAvoidingView,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
@@ -14,15 +12,20 @@ import { Feather } from '@expo/vector-icons';
 // import * as MailComposer from 'expo-mail-composer';
 // import formatMoney from '../../utils/formatMoney';
 
-import styles from './styles';
-import Header from '../../components/Header';
+import MessageSentIlustra from '../../assets/message-sent.svg';
 
+// Components
+import Header from '../../components/Header';
 import DummyAvatar from '../../assets/paulo.png';
 import DummyImg from '../../assets/dummy-img.png';
 import Rating from '../../components/Rating';
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
 import TextField from '../../components/TextField';
+
+// Styles
+import styles from './styles';
+import FullScreenModal from '../../components/Modal/FullScreenModal';
 
 export default function Profile() {
   const navigation = useNavigation();
@@ -48,6 +51,7 @@ export default function Profile() {
   // }
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [messageModalVisible, setMessageModalVisible] = useState(false);
   const [text, setText] = useState('');
 
   return (
@@ -121,12 +125,25 @@ export default function Profile() {
           onChange={(text) => setText(text)}
           multiline
           numberOfLines={8}
+          height={150}
         />
         <Button
           buttonLabel="Enviar mensagem"
-          onPress={() => console.log('enviadoooo...')}
+          onPress={() => setMessageModalVisible(true)}
         />
       </Modal>
+
+      <FullScreenModal
+        visible={messageModalVisible}
+        title="Mensagem enviada!"
+        description="Você está próximo a essa nova conexão. Aguarde a resposta dessa nova parceria de sucesso!"
+        ilustra={<MessageSentIlustra width={267} height={221} />}
+        buttonLabel="OK!"
+        onButtonPress={() => {
+          navigation.navigate('Home')
+          setMessageModalVisible(false)
+        }}
+      />
     </View>
   )
 }

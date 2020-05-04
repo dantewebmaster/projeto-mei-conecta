@@ -8,9 +8,10 @@ export default function TextField({
   numberOfLines,
   onChange,
   value,
+  height,
 }) {
   return (
-    <View style={styles.textAreaContainer}>
+    <View style={[styles.textAreaContainer, { height }]}>
       <TextInput
         multiline={multiline}
         numberOfLines={numberOfLines}
