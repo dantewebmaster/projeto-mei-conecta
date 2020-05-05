@@ -71,10 +71,15 @@ const Partnership = () => {
               <Text style={styles.heading1}>Pendentes</Text>
 
               {/* Componentizar (Badge) */}
-              <Text style={styles.badge}>{partnerships.pending.length}</Text>
+              <View style={styles.badge}>
+                <Text>
+                  {partnerships.pending.length}
+                </Text>
+              </View>
 
-              {partnerships.pending.map(p => (
+              {partnerships.pending.map((p, index) => (
                 <MessageCard
+                  key={index}
                   name={p.toBusinessId.name}
                   category={p.toBusinessId.category}
                   profileUrl={p.toBusinessId.profileUrl}
@@ -90,10 +95,15 @@ const Partnership = () => {
               <Text style={styles.heading1}>Aceitas</Text>
 
               {/* Componentizar (Badge) */}
-              <Text style={styles.badge}>{partnerships.accepted.length}</Text>
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>
+                  {partnerships.pending.length}
+                </Text>
+              </View>
 
-              {partnerships.accepted.map(p => (
+              {partnerships.accepted.map((p, index) => (
                 <MessageCard
+                  key={index}
                   name={p.toBusinessId.name}
                   category={p.toBusinessId.category}
                   profileUrl={p.toBusinessId.profileUrl}
@@ -113,6 +123,7 @@ const Partnership = () => {
 
               {partnerships.rejected.map(p => (
                 <MessageCard
+                  key={index}
                   name={p.toBusinessId.name}
                   category={p.toBusinessId.category}
                   profileUrl={p.toBusinessId.profileUrl}
@@ -131,8 +142,9 @@ const Partnership = () => {
               <Text style={styles.badge}>{partnerships.canceled.length}</Text>
 
               {/* Componentizar (MessageCard) */}
-              {partnerships.canceled.map(p => (
+              {partnerships.canceled.map((p, index)=> (
                 <MessageCard
+                  key={index}
                   name={p.toBusinessId.name}
                   category={p.toBusinessId.category}
                   profileUrl={p.toBusinessId.profileUrl}
@@ -153,10 +165,10 @@ const Partnership = () => {
           <View style={styles.textInfos}>
             <Text style={styles.textInfos}>{ modalData?.invite }</Text>
           </View>
-          <Image style={styles.textAvatar} 
+          <Image style={styles.textAvatar}
             source={{
               uri: 'https://firebasestorage.googleapis.com/v0/b/parceria-facil.appspot.com/o/%207e7TUk3HNNVNRHIbRZ1h%2Fprofile.jpg?alt=media&token=1ad7eb46-9845-4b39-a7c7-c54dff335b4e'
-            }} 
+            }}
           />
         </View>
         <View style={styles.responseCard}>

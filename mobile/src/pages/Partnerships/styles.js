@@ -89,6 +89,9 @@ export default StyleSheet.create({
     color: '#fff',
     lineHeight: 22,
   },
+  badgeText: {
+    color: '#fff',
+  },
 
   // Componentizar (h1)
   heading1: {

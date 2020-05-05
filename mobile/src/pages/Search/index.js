@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, TextInput, ScrollView, RefreshControl } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 import { getAllCategory } from '../../services/categoryApi';
@@ -35,20 +35,21 @@ export default function Search() {
       showsVerticalScrollIndicator={false}
       refreshControl={
         <RefreshControl
-          refreshing={false}
-          onRefresh={getCategoriesList}
+        refreshing={false}
+        onRefresh={getCategoriesList}
         />
       }
-    >
+      >
       <View style={styles.searchFieldContainer}>
         <View style={styles.searchField}>
           <Feather name="search" size={24} color="#999" />
           <TextInput
             style={styles.searchInput}
             placeholder="Digite uma busca..."
-          />
+            />
         </View>
       </View>
+      <Text style={styles.heading2}>Categorias</Text>
       <CategoriesList
         categories={categories}
         loading={loading}

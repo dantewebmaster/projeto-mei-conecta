@@ -30,7 +30,8 @@ export default StyleSheet.create({
     // elevation: 4,
   },
   categoryTitle: {
-    fontSize: 20,
+    fontSize: 18,
+    color: '#333',
     fontWeight: '500',
     textAlign: 'center',
   },

@@ -51,4 +51,12 @@ export default StyleSheet.create({
     color: '#424242',
     fontSize: 22,
   },
+
+  // Componentizar (heading2)
+  heading2: {
+    fontWeight: '500',
+    fontSize: 20,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
 });
