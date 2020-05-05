@@ -7,8 +7,13 @@ import styles from './styles';
 import Header from '../../components/Header';
 import Rating from '../../components/Rating';
 
-const Detail = () => {
-  const [partnerships, getPartnerships] = useState({});
+const Partnership = () => {
+  const [partnerships, getPartnerships] = useState({
+    pending: [],
+    accepted: [],
+    rejected: [],
+    canceled: [],
+  });
 
   const navigation = useNavigation();
 
@@ -18,7 +23,7 @@ const Detail = () => {
 
   useEffect(() => {
     async function getParnershipList() {
-      await getAllPartnership('vBcnsrdMCzzzdTLWiPf6')
+      await getAllPartnership('7e7TUk3HNNVNRHIbRZ1h')
       .then((resp) => {
         getPartnerships({
           pending: resp.filter(p => p.status === 0),
@@ -120,4 +125,4 @@ const Detail = () => {
   )
 }
 
-export default Detail;
+export default Partnership;

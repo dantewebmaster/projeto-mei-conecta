@@ -27,7 +27,7 @@ export default function Profile() {
     // Elegant way to use async/await
     async function getMyProfile() {
       try {
-        const response = await getBusinessById('vBcnsrdMCzzzdTLWiPf6');
+        const response = await getBusinessById('7e7TUk3HNNVNRHIbRZ1h');
         getProfile({ ...response });
       } catch (error) {
         console.log(error)
@@ -51,7 +51,7 @@ export default function Profile() {
       xhr.send(null);
     });
 
-    addImage('vBcnsrdMCzzzdTLWiPf6', type, data);
+    addImage('7e7TUk3HNNVNRHIbRZ1h', type, data);
   }
 
   pickImage = async (type) => {

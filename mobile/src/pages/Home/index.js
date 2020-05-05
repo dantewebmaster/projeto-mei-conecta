@@ -13,7 +13,7 @@ import ProfileCard from '../../components/ProfileCard';
 export default function Home() {
   const [business, getBusiness] = useState([]);
   const [categories, getCategories] = useState([]);
-  const navigation = useNavigation();
+  const navigation = useNavigation();;
 
   function navigateToSearch() {
     navigation.navigate('Search');
