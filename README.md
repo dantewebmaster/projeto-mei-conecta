@@ -1,2 +1,2 @@
-# Projeto Parceria Fácil
-Repositório para o projeto Parceria Fácil
+# Projeto MEI Conecta
+Repositório para o projeto MEI Conecta
