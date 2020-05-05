@@ -4,8 +4,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-
-  ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getAllBusiness } from '../../services/businessApi';
@@ -29,22 +28,22 @@ export default function Home() {
     navigation.navigate('Details', { businessId })
   }
 
-  useEffect(() => {
-    async function getBusinessList() {
-      try {
-        setLoading(true);
+  async function getBusinessList() {
+    try {
+      setLoading(true);
 
-        const response = await getAllBusiness({});
+      const response = await getAllBusiness({});
 
-        setBusiness([...response]);
+      setBusiness([...response]);
 
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
     }
+  }
 
+  useEffect(() => {
     getBusinessList();
   }, []);
 
@@ -53,6 +52,12 @@ export default function Home() {
       <ScrollView
         stickyHeaderIndices={[1]} // component with index [1] is sticky
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={getBusinessList}
+          />
+        }
       >
         <View style={styles.logo}>
           <Logo width={200} height={60} />

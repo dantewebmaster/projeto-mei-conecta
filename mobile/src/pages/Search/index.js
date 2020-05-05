@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, ScrollView } from 'react-native';
+import { View, TextInput, ScrollView, RefreshControl } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 import { getAllCategory } from '../../services/categoryApi';
@@ -11,20 +11,20 @@ export default function Search() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function getCategoriesList() {
-      try {
-        setLoading(true);
-        const response = await getAllCategory();
+  async function getCategoriesList() {
+    try {
+      setLoading(true);
+      const response = await getAllCategory();
 
-        setCategories([ ...response ]);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        console.log(error)
-      }
+      setCategories([ ...response ]);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error)
     }
+  }
 
+  useEffect(() => {
     getCategoriesList();
   }, []);
 
@@ -33,6 +33,12 @@ export default function Search() {
       style={styles.container}
       stickyHeaderIndices={[0]} // component with index [1] is sticky
       showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl
+          refreshing={false}
+          onRefresh={getCategoriesList}
+        />
+      }
     >
       <View style={styles.searchFieldContainer}>
         <View style={styles.searchField}>
