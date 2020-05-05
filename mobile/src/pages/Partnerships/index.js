@@ -4,7 +4,7 @@ import { getAllPartnership } from '../../services/partnershipApi';
 
 import styles from './styles';
 import Header from '../../components/Header';
-import Rating from '../../components/Rating';
+import Modal from '../../components/Modal';
 import Loader from '../../components/Loader';
 import MessageCard from '../../components/MessageCard';
 
@@ -15,6 +15,8 @@ const Partnership = () => {
     rejected: [],
     canceled: [],
   });
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalData, setDataModal] = useState({});
   const [loading, setLoading] = useState(false);
 
   async function getParnershipList() {
@@ -35,6 +37,11 @@ const Partnership = () => {
     }
   }
 
+  function useModal(status, data) {
+    setModalVisible(status);
+    setDataModal(data);
+  }
+
   useEffect(() => {
     getParnershipList();
   }, []);
@@ -45,7 +52,7 @@ const Partnership = () => {
         title="Minhas parcerias"
       />
 
-      {loading && (
+      { loading && (
         <Loader />
       )}
 
@@ -72,6 +79,7 @@ const Partnership = () => {
                   category={p.toBusinessId.category}
                   profileUrl={p.toBusinessId.profileUrl}
                   rating={p.toBusinessId.rating}
+                  onPress={() => useModal(true, p)}
                 />
               ))}
             </View>
@@ -90,6 +98,7 @@ const Partnership = () => {
                   category={p.toBusinessId.category}
                   profileUrl={p.toBusinessId.profileUrl}
                   rating={p.toBusinessId.rating}
+                  onPress={() => useModal(true, p)}
                 />
               ))}
             </View>
@@ -108,6 +117,7 @@ const Partnership = () => {
                   category={p.toBusinessId.category}
                   profileUrl={p.toBusinessId.profileUrl}
                   rating={p.toBusinessId.rating}
+                  onPress={() => useModal(true, p)}
                 />
               ))}
             </View>
@@ -127,12 +137,35 @@ const Partnership = () => {
                   category={p.toBusinessId.category}
                   profileUrl={p.toBusinessId.profileUrl}
                   rating={p.toBusinessId.rating}
+                  onPress={() => useModal(true, p)}
                 />
               ))}
             </View>
           )}
         </ScrollView>
       )}
+
+      <Modal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      >
+        <View style={styles.inviteCard}>
+          <View style={styles.textInfos}>
+            <Text style={styles.textInfos}>{ modalData?.invite }</Text>
+          </View>
+          <Image style={styles.textAvatar} 
+            source={{
+              uri: 'https://firebasestorage.googleapis.com/v0/b/parceria-facil.appspot.com/o/%207e7TUk3HNNVNRHIbRZ1h%2Fprofile.jpg?alt=media&token=1ad7eb46-9845-4b39-a7c7-c54dff335b4e'
+            }} 
+          />
+        </View>
+        <View style={styles.responseCard}>
+          <Image style={styles.textAvatar} source={{ uri: modalData?.toBusinessId?.profileUrl}} />
+          <View style={styles.textInfos}>
+            <Text style={styles.textInfos}>{ modalData?.reason }</Text>
+          </View>
+        </View>
+      </Modal>
     </View>
   )
 }
