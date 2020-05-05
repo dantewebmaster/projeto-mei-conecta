@@ -68,7 +68,7 @@ export default function Home() {
           style={styles.fakeSearchFieldContainer}
         >
           <View style={styles.fakeSearchField}>
-            <Feather name="search" size={32} color="#999" />
+            <Feather name="search" size={24} color="#999" />
             <Text style={styles.fakeSearchFieldText}>O que você procura?</Text>
           </View>
         </TouchableOpacity>

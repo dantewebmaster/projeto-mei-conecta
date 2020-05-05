@@ -42,7 +42,7 @@ export default function Search() {
     >
       <View style={styles.searchFieldContainer}>
         <View style={styles.searchField}>
-          <Feather name="search" size={32} color="#999" />
+          <Feather name="search" size={24} color="#999" />
           <TextInput
             style={styles.searchInput}
             placeholder="Digite uma busca..."
