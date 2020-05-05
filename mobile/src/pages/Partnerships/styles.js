@@ -38,6 +38,39 @@ export default StyleSheet.create({
     borderColor: '#ddd',
     backgroundColor: '#ddd',
   },
+  textAvatar: {
+    margin: 5,
+    width: 50,
+    height: 50,
+    borderWidth: 1,
+    borderRadius: 100,
+    borderColor: '#ddd',
+    backgroundColor: '#ddd',
+  },
+  textInfo: {
+    color: '#fff',
+    textAlign: 'right',
+  },
+  inviteCard: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 4,
+    padding: 8,
+    marginBottom: 8,
+  },
+  responseCard: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 4,
+    padding: 8,
+    marginBottom: 8,
+  },
 
   // Componentizar (Badge)
   badge: {

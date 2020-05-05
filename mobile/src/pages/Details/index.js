@@ -14,8 +14,6 @@ import { getBusinessById } from '../../services/businessApi';
 
 // Components
 import Header from '../../components/Header';
-import DummyAvatar from '../../assets/paulo.png';
-import DummyImg from '../../assets/dummy-img.png';
 import Rating from '../../components/Rating';
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
