@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, Image, ScrollView, RefreshControl } from 'react-native';
 import { getAllPartnership } from '../../services/partnershipApi';
 
 import styles from './styles';
 import Header from '../../components/Header';
-import Rating from '../../components/Rating';
 import Modal from '../../components/Modal';
-import TextField from '../../components/TextField';
+import Loader from '../../components/Loader';
+import MessageCard from '../../components/MessageCard';
 
 const Partnership = () => {
-  const [partnerships, getPartnerships] = useState({
+  const [partnerships, setPartnerships] = useState({
     pending: [],
     accepted: [],
     rejected: [],
@@ -18,11 +17,24 @@ const Partnership = () => {
   });
   const [modalVisible, setModalVisible] = useState(false);
   const [modalData, setDataModal] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  const navigation = useNavigation();
+  async function getParnershipList() {
+    try {
+      setLoading(true);
+      const response = await getAllPartnership('7e7TUk3HNNVNRHIbRZ1h');
 
-  function navigateBack() {
-    navigation.goBack();
+      setPartnerships({
+        pending: response.filter(p => p.status === 0),
+        accepted: response.filter(p => p.status === 1),
+        rejected: response.filter(p => p.status === 2),
+        canceled: response.filter(p => p.status === 3),
+      })
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
   }
 
   function useModal(status, data) {
@@ -31,18 +43,6 @@ const Partnership = () => {
   }
 
   useEffect(() => {
-    async function getParnershipList() {
-      await getAllPartnership('7e7TUk3HNNVNRHIbRZ1h')
-      .then((resp) => {
-        getPartnerships({
-          pending: resp.filter(p => p.status === 0),
-          accepted: resp.filter(p => p.status === 1),
-          rejected: resp.filter(p => p.status === 2),
-          canceled: resp.filter(p => p.status === 3),
-        })})
-      .catch((error) => console.log(error));
-    }
-
     getParnershipList();
   }, []);
 
@@ -50,86 +50,100 @@ const Partnership = () => {
     <View style={styles.container}>
       <Header
         title="Minhas parcerias"
-        // onBack={navigateBack}
       />
 
-      <ScrollView style={styles.messagesContainer}>
-        { partnerships.pending.length > 0 && (
-          <View style={styles.messagesSection}>
-            <Text style={styles.heading1}>Pendentes</Text>
-            {/* Componentizar (Badge) */}
-            <Text style={styles.badge}>{partnerships.pending.length}</Text>
-            {/* Componentizar (MessageCard) */}
-            { partnerships.pending.map(p => (
-              <View style={styles.messageCard}>
-                <Image style={styles.messageAvatar} source={{ uri: p.toBusinessId.profileUrl}} />
-                <View style={styles.messageInfos}>
-                  <Text style={styles.messageName}>{ p.toBusinessId.name }</Text>
-                  <Text style={styles.category}>{ p.toBusinessId.category }</Text>
-                  <Rating count={ p.toBusinessId.rating } />
-                </View>
-              </View>
-            ))}
-          </View>
-        )}
+      { loading && (
+        <Loader />
+      )}
 
-        { partnerships.accepted.length > 0 && (
-          <View style={styles.messagesSection}>
-            <Text style={styles.heading1}>Aceitas</Text>
-            {/* Componentizar (Badge) */}
-            <Text style={styles.badge}>{partnerships.accepted.length}</Text>
-            {/* Componentizar (MessageCard) */}
-            { partnerships.accepted.map(p => (
-              <TouchableOpacity style={styles.messageCard} onPress={() => useModal(true, p)}>
-                <Image style={styles.messageAvatar} source={{ uri: p.toBusinessId.profileUrl}} />
-                <View style={styles.messageInfos}>
-                  <Text style={styles.messageName}>{ p.toBusinessId.name }</Text>
-                  <Text style={styles.category}>{ p.toBusinessId.category }</Text>
-                  <Rating count={ p.toBusinessId.rating } />
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
+      {!loading && (
+        <ScrollView
+          style={styles.messagesContainer}
+          refreshControl={
+            <RefreshControl
+              refreshing={false}
+              onRefresh={getParnershipList}
+            />
+          }
+        >
+          {partnerships.pending.length > 0 && (
+            <View style={styles.messagesSection}>
+              <Text style={styles.heading1}>Pendentes</Text>
 
-        { partnerships.rejected.length > 0 && (
-          <View style={styles.messagesSection}>
-            <Text style={styles.heading1}>Recusadas</Text>
-            {/* Componentizar (Badge) */}
-            <Text style={styles.badge}>{partnerships.rejected.length}</Text>
-            {/* Componentizar (MessageCard) */}
-            { partnerships.rejected.map(p => (
-              <View style={styles.messageCard}>
-                <Image style={styles.messageAvatar} source={{ uri: p.toBusinessId.profileUrl}} />
-                <View style={styles.messageInfos}>
-                  <Text style={styles.messageName}>{ p.toBusinessId.name }</Text>
-                  <Text style={styles.category}>{ p.toBusinessId.category }</Text>
-                  <Rating count={ p.toBusinessId.rating } />
-                </View>
-              </View>
-            ))}
-          </View>
-        )}
+              {/* Componentizar (Badge) */}
+              <Text style={styles.badge}>{partnerships.pending.length}</Text>
 
-        { partnerships.canceled.length > 0 && (
-          <View style={styles.messagesSection}>
-            <Text style={styles.heading1}>Canceladas</Text>
-            {/* Componentizar (Badge) */}
-            <Text style={styles.badge}>{partnerships.canceled.length}</Text>
-            {/* Componentizar (MessageCard) */}
-            { partnerships.canceled.map(p => (
-              <View style={styles.messageCard}>
-                <Image style={styles.messageAvatar} source={{ uri: p.toBusinessId.profileUrl}} />
-                <View style={styles.messageInfos}>
-                  <Text style={styles.messageName}>{ p.toBusinessId.name }</Text>
-                  <Text style={styles.category}>{ p.toBusinessId.category }</Text>
-                  <Rating count={ p.toBusinessId.rating } />
-                </View>
-              </View>
-            ))}
-          </View>
-        )}
-      </ScrollView>
+              {partnerships.pending.map(p => (
+                <MessageCard
+                  name={p.toBusinessId.name}
+                  category={p.toBusinessId.category}
+                  profileUrl={p.toBusinessId.profileUrl}
+                  rating={p.toBusinessId.rating}
+                  onPress={() => useModal(true, p)}
+                />
+              ))}
+            </View>
+          )}
+
+          {partnerships.accepted.length > 0 && (
+            <View style={styles.messagesSection}>
+              <Text style={styles.heading1}>Aceitas</Text>
+
+              {/* Componentizar (Badge) */}
+              <Text style={styles.badge}>{partnerships.accepted.length}</Text>
+
+              {partnerships.accepted.map(p => (
+                <MessageCard
+                  name={p.toBusinessId.name}
+                  category={p.toBusinessId.category}
+                  profileUrl={p.toBusinessId.profileUrl}
+                  rating={p.toBusinessId.rating}
+                  onPress={() => useModal(true, p)}
+                />
+              ))}
+            </View>
+          )}
+
+          {partnerships.rejected.length > 0 && (
+            <View style={styles.messagesSection}>
+              <Text style={styles.heading1}>Recusadas</Text>
+
+              {/* Componentizar (Badge) */}
+              <Text style={styles.badge}>{partnerships.rejected.length}</Text>
+
+              {partnerships.rejected.map(p => (
+                <MessageCard
+                  name={p.toBusinessId.name}
+                  category={p.toBusinessId.category}
+                  profileUrl={p.toBusinessId.profileUrl}
+                  rating={p.toBusinessId.rating}
+                  onPress={() => useModal(true, p)}
+                />
+              ))}
+            </View>
+          )}
+
+          {partnerships.canceled.length > 0 && (
+            <View style={styles.messagesSection}>
+              <Text style={styles.heading1}>Canceladas</Text>
+
+              {/* Componentizar (Badge) */}
+              <Text style={styles.badge}>{partnerships.canceled.length}</Text>
+
+              {/* Componentizar (MessageCard) */}
+              {partnerships.canceled.map(p => (
+                <MessageCard
+                  name={p.toBusinessId.name}
+                  category={p.toBusinessId.category}
+                  profileUrl={p.toBusinessId.profileUrl}
+                  rating={p.toBusinessId.rating}
+                  onPress={() => useModal(true, p)}
+                />
+              ))}
+            </View>
+          )}
+        </ScrollView>
+      )}
 
       <Modal
         visible={modalVisible}
