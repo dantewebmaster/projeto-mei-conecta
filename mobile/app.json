@@ -18,7 +18,7 @@
       ]
     },
     "name": "Mei Conecta",
-    "slug": "mobile",
+    "slug": "projeto-mei-conecta",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -40,7 +40,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.time62.meiconecta",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.time62.meiconecta",
+      "versionCode": 1
     }
   }
 }
