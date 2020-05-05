@@ -5,7 +5,8 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 24,
-    paddingTop: Constants.statusBarHeight + 20,
+    // paddingTop: Constants.statusBarHeight + 20,
+    backgroundColor: '#fff',
   },
   logo: {
     width: 150,
@@ -16,33 +17,38 @@ export default StyleSheet.create({
     marginVertical: 16,
   },
 
-  fakeSearchFieldContainer: {
-    paddingBottom: 8,
+  searchFieldContainer: {
     backgroundColor: '#fff',
+    paddingTop: Constants.statusBarHeight + 20,
+    paddingBottom: 16,
   },
-  fakeSearchField: {
-    marginBottom: 16,
-    marginTop: 16,
-    justifyContent: 'center',
-    paddingVertical: 16,
-    paddingLeft: 24,
-    shadowColor: "#ddd",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 4.65,
-
-    borderWidth: 1,
+  searchField: {
     borderColor: '#d7d7d7',
+    backgroundColor: '#fff',
+    borderWidth: 1,
     elevation: 8,
     width: '100%',
     height: 60,
-    backgroundColor: '#fff',
+    padding: 16,
     borderRadius: 6,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    shadowColor: "#999",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
   },
-  fakeSearchFieldText: {
+  searchInput: {
+    flex: 1,
+    paddingHorizontal: 16,
+    color: '#424242',
     fontSize: 22,
   },
 });

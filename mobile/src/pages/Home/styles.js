@@ -23,14 +23,24 @@ export default StyleSheet.create({
     marginVertical: 8,
     alignItems: 'center',
     paddingVertical: 8,
-    paddingLeft: 24,
+    paddingLeft: 16,
     flexDirection: 'row',
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#ccc',
     width: '100%',
     height: 60,
     backgroundColor: '#fff',
     borderRadius: 6,
+
+    shadowColor: "#999",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
   },
   fakeSearchFieldText: {
     fontSize: 22,
