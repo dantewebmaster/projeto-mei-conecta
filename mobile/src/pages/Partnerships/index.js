@@ -23,7 +23,7 @@ const Partnership = () => {
 
   useEffect(() => {
     async function getParnershipList() {
-      await getAllPartnership('vBcnsrdMCzzzdTLWiPf6')
+      await getAllPartnership('7e7TUk3HNNVNRHIbRZ1h')
       .then((resp) => {
         getPartnerships({
           pending: resp.filter(p => p.status === 0),
